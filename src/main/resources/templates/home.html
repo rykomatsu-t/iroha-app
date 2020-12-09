@@ -5,6 +5,40 @@
     <title>ホーム画面</title>
 </head>
 <body>
-<h1>ホーム画面です</h1>
+<div th:if="${login_user == null || login_user == ''}">ログインしていません</div>
+<div th:unless="${login_user == null || login_user == ''}">
+    [[${login_user}+'さん']]<br>
+</div>
+<!--<h3 th:text="${name == null || name == ''} ? 'ゲスト' : ${name}+'さん'"></h3>-->
+<br>
+<br>
+<br>
+<br>
+<form action="/search" method="get">
+    <input type="text" name="name" placeholder="送り先の名前を入力">
+    <input type="submit" value="検索">
+</form>
+
+<div th:if="${username == null}">検索結果はありません</div>
+
+<form method="post" action="/send">
+    <div th:unless="${username == null}">
+        <table>
+            <tr>
+                <th>社員番号</th>
+                <th>名前</th>
+                <th>送信</th>
+            </tr>
+            <tr>
+                <td th:text="${userid}"></td>
+                <td th:text="${username}"></td>
+                <td>
+                    <input type="hidden" name="to" th:value="${userid}">
+                    <input type="submit" value="送信する"></input>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
 </body>
 </html>
