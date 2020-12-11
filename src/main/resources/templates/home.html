@@ -5,7 +5,9 @@
     <title>ホーム画面</title>
 </head>
 <body>
+
 <div th:if="${login_user == null || login_user == ''}">ログインしていません</div>
+
 <div th:unless="${login_user == null || login_user == ''}">
     [[${login_user}+'さん']]<br>
 </div>

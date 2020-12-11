@@ -1,17 +1,15 @@
 package com.solxyz.irohaapp.controller;
 
-import com.solxyz.irohaapp.service.UserService;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.naming.Name;
-import javax.servlet.http.HttpSession;
+import com.solxyz.irohaapp.service.UserService;
 
 @Controller
 public class LoginController {
@@ -27,8 +25,9 @@ public class LoginController {
      * @return
      */
     @GetMapping("/")
+    @PostMapping("/")
     public String index() {
-        userService.addUser();
+        // index.htmlに飛ぶ
         return "index";
     }
 
@@ -39,7 +38,7 @@ public class LoginController {
      * @param password ログインパスワード
      * @return
      */
-    @PostMapping("/login")
+    @PostMapping("/login") // localhost:8080/loginにアクセスされたときにこのメソッドが呼ばれる
     public ModelAndView login(ModelAndView mav, @RequestParam("name") String name, @RequestParam("password") String password) {
 
         // TODO nameとpasswordをもとにログインの成否を判定
@@ -47,8 +46,10 @@ public class LoginController {
 
         if(isLogin){
             session.setAttribute("login_user", name);
+
             mav.addObject("login_user", name);
-            mav.setViewName("redirect:/home");
+            mav.setViewName("home");
+
             return mav;
         } else {
             // TODO ログイン失敗時にエラーページに飛ばす

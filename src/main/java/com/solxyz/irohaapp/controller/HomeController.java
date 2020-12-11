@@ -1,18 +1,17 @@
 package com.solxyz.irohaapp.controller;
 
-import com.solxyz.irohaapp.block.SendAsset;
-import com.solxyz.irohaapp.entity.UserInfo;
-import com.solxyz.irohaapp.service.UserService;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+import com.solxyz.irohaapp.block.SendAsset;
+import com.solxyz.irohaapp.entity.UserInfo;
+import com.solxyz.irohaapp.service.UserService;
 
 /**
  * ホーム画面での操作に関わるコントローラー

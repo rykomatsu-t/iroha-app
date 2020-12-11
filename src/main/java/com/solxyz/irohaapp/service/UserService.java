@@ -1,10 +1,11 @@
 package com.solxyz.irohaapp.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.solxyz.irohaapp.block.SendAsset;
 import com.solxyz.irohaapp.entity.UserInfo;
 import com.solxyz.irohaapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * ユーザーを検索するサービス
@@ -41,30 +42,6 @@ public class UserService {
      */
     public UserInfo searchUserByName(String name) {
         return repository.findByName(name);
-    }
-
-    /**
-     * ユーザー追加
-     * h2DBを使っているため、ユーザー登録のため仮実装
-     * 本番ではpostgresを使うためここは不要
-     * @return
-     */
-    public String addUser() {
-        UserInfo admin = new UserInfo();
-        admin.setId(1);
-        admin.setName("admin");
-        admin.setPassword("pass");
-        admin.setQuantity(100);
-        repository.saveAndFlush(admin);
-
-        UserInfo user = new UserInfo();
-        user.setId(2);
-        user.setName("user");
-        user.setPassword("pass");
-        user.setQuantity(0.0);
-        repository.saveAndFlush(user);
-
-        return "ok";
     }
 
 }
