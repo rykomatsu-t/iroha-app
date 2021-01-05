@@ -1,46 +1,72 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ホーム画面</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link th:href="@{/css/home.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-<div th:if="${login_user == null || login_user == ''}">ログインしていません</div>
-
-<div th:unless="${login_user == null || login_user == ''}">
-    [[${login_user}+'さん']]<br>
-</div>
-<!--<h3 th:text="${name == null || name == ''} ? 'ゲスト' : ${name}+'さん'"></h3>-->
-<br>
-<br>
-<br>
-<br>
-<form action="/search" method="get">
-    <input type="text" name="name" placeholder="送り先の名前を入力">
-    <input type="submit" value="検索">
-</form>
-
-<div th:if="${username == null}">検索結果はありません</div>
-
-<form method="post" action="/send">
-    <div th:unless="${username == null}">
-        <table>
-            <tr>
-                <th>社員番号</th>
-                <th>名前</th>
-                <th>送信</th>
-            </tr>
-            <tr>
-                <td th:text="${userid}"></td>
-                <td th:text="${username}"></td>
-                <td>
-                    <input type="hidden" name="to" th:value="${userid}">
-                    <input type="submit" value="送信する"></input>
-                </td>
-            </tr>
-        </table>
+<div class="block">
+    <div class="row-point-info" th:inline="text">
+        保有ポイント: [[${mypoint}]] pt 　
+        <a href="/history" id="history" class="btn btn-primary">履歴</a>
     </div>
-</form>
+    <br>
+    <h3 class="send-message" th:text="${sendMsg == null} ? '' : ${sendMsg}">
+    </h3>
+    <div class="row-point-send">
+        <form action="/send" method="post">
+            <input type="text" id="to" placeholder="送り先名を入力" name="to">　 に　<input type="number" value="0"
+                                                                                  name="quantity">POINTを　
+            <input type="submit" class="btn btn-primary" value="送る"></input>
+        </form>
+    </div>
+</div>
+<div class="block">
+    <form action="/search" method="get">
+        <div class="container row-user-search">
+            <div id="item-head-dep">部署</div>
+            <div id="item-head-username">ユーザー名</div>
+            <div id="item-dep">
+                <select name="dep">
+                    <option th:each="dep : ${deplist}" th:value="${dep.id}" th:inline="text">[[${dep.name}]]
+                    </option>
+                </select>
+            </div>
+            <div id="item-username"><input type="text" name="name"></div>
+            <div id="item-search-button">
+                <input type="submit" class="btn btn-primary" value="検索"></input>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>部署</th>
+            <th>名前</th>
+        </tr>
+        <tr th:each="user : ${userlist}" th:object="${user}" th:if="${user != null}">
+            <td th:text="*{dep.name}"></td>
+            <td class="list-user" th:text="*{name}" onclick="getElementById('to').value = this.innerHTML"></td>
+        </tr>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

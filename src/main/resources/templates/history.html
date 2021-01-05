@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ログインページ</title>
+    <title>取引履歴</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/history.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-<div th:if="${loginFailed}" style="color: red;">ログインに失敗しました。</div>
+<div>
+    <a href="/home" id="history" class="btn btn-secondary">戻る</a>
 
-
-<form action="/login" method="post">
-    <div class="form-group">
-        <label for="exampleInputId1">Username</label>
-        <input type="text" class="form-control" name="name" id="exampleInputId1" aria-describedby="emailHelp"
-               placeholder="Enter username">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <table class="table">
+        <tr>
+            <th>あげた人</th>
+            <th>もらった人</th>
+            <th>コイン数</th>
+            <th>メッセージ</th>
+        </tr>
+        <tr th:each="history : ${historylist}" th:object="${history}" th:if="${history != null}">
+            <td th:text="*{sendId.name}"></td>
+            <td th:text="*{recieveId.name}"></td>
+            <td th:text="*{val}"></td>
+            <td th:text="*{message}"></td>
+        </tr>
+    </table>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

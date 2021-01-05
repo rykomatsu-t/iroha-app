@@ -41,19 +41,16 @@ public class LoginController {
     @PostMapping("/login") // localhost:8080/loginにアクセスされたときにこのメソッドが呼ばれる
     public ModelAndView login(ModelAndView mav, @RequestParam("name") String name, @RequestParam("password") String password) {
 
-        // TODO nameとpasswordをもとにログインの成否を判定
-        boolean isLogin = true;
+        boolean isLogin = userService.login(name, password);
 
         if(isLogin){
             session.setAttribute("login_user", name);
-
-            mav.addObject("login_user", name);
-            mav.setViewName("home");
+            mav.setViewName("redirect:/home");
 
             return mav;
         } else {
-            // TODO ログイン失敗時にエラーページに飛ばす
-            // 例: mav.setViewName("errorpage");
+            mav.addObject("loginFailed", true);
+            mav.setViewName("index");
             return mav;
         }
     }

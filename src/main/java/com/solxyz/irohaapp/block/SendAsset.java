@@ -2,6 +2,7 @@ package com.solxyz.irohaapp.block;
 
 import java.security.KeyPair;
 
+import com.solxyz.irohaapp.entity.UserInfo;
 import com.solxyz.irohaapp.utility.IrohaConnection;
 import jp.co.soramitsu.iroha.java.IrohaAPI;
 import jp.co.soramitsu.iroha.java.Transaction;
@@ -11,16 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Component
 public class SendAsset {
-
-    /**
-     * adminの公開鍵
-     */
-    private final String ADMIN_PUB = "313a07e6384776ed95447710d15e59148473ccfc052a681317a72a69f2a49910";
-
-    /**
-     * adminの秘密鍵
-     */
-    private final String ADMIN_PRIV = "f101537e319568c765b2cc89698325604991dca57b9716b58016b253506cab70";
 
     /**
      * adminユーザーのアカウント
@@ -37,7 +28,7 @@ public class SendAsset {
      */
     private final String COIN = "coin#test";
 
-    public void send(String from, String to, double quantity) throws Exception {
+    public void send(UserInfo from, UserInfo to, int quantity) throws Exception {
 
         // iroha接続用のクラスを生成
         IrohaConnection irohaUtil = new IrohaConnection("localhost", 50051);
@@ -46,11 +37,11 @@ public class SendAsset {
         IrohaAPI api = irohaUtil.getApi();
 
         // 署名用のKeyPairを作成
-        KeyPair keyPair = irohaUtil.createExistKeyPair(ADMIN_PUB, ADMIN_PRIV);
+        KeyPair keyPair = irohaUtil.createExistKeyPair(from.getPub(), from.getPriv());
 
         // トランザクションの組み立て
         // 内容：admin@test から test@test へ coin#test を 20.0 送信する
-        val tx = Transaction.builder(ADMIN).transferAsset(ADMIN, TEST, COIN, "coinの転送", "20.0").sign(keyPair).build();
+        val tx = Transaction.builder(from.getName()).transferAsset(from.getName(), to.getName(), COIN, "coinの転送", String.valueOf((double) quantity)).sign(keyPair).build();
 
         // 組み立てたトランザクションを実行
         api.transaction(tx).blockingFirst();
