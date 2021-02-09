@@ -18,12 +18,14 @@
             <th>もらった人</th>
             <th>コイン数</th>
             <th>メッセージ</th>
+            <th>取引日時</th>
         </tr>
         <tr th:each="history : ${historylist}" th:object="${history}" th:if="${history != null}">
             <td th:text="*{sendId.name}"></td>
-            <td th:text="*{recieveId.name}"></td>
+            <td th:text="*{receiveId.name}"></td>
             <td th:text="*{val}"></td>
             <td th:text="*{message}"></td>
+            <td th:text="*{#dates.format(sendTime, 'yyyy/MM/dd HH:mm:ss')}"></td>
         </tr>
     </table>
 </div>

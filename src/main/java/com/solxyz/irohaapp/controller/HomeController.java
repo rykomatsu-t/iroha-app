@@ -131,9 +131,6 @@ public class HomeController {
             return "redirect:/";
         }
 
-        System.out.println("from: " + self.getName());
-        System.out.println("to: " + to);
-
         boolean isSendCompleted = userService.send(self.getName(), to, quantity);
         String sendMsg = isSendCompleted ? to + "さんに " + quantity + "pt を送りました。" : "コインの送信に失敗しました。";
 

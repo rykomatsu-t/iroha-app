@@ -4,6 +4,8 @@ import com.google.type.Money;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -25,7 +27,7 @@ public class History {
      * 送信日時
      */
     @Column(name = "send_time")
-    private Date sendTime;
+    private Timestamp sendTime;
 
     /**
      * メッセージ
@@ -51,9 +53,9 @@ public class History {
     /**
      * 送信先ユーザー
      */
-    @JoinColumn(name = "recieve_id")
+    @JoinColumn(name = "receive_id")
     @ManyToOne
-    private UserInfo recieveId;
+    private UserInfo receiveId;
 
     /**
      * 送信するアセットの量

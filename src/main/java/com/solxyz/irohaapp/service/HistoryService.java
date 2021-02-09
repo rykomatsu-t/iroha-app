@@ -20,7 +20,7 @@ public class HistoryService {
      * @return 取引履歴一覧
      */
     public List<History> getHistory(UserInfo loginUser){
-        List<History> historyList = repository.findBySendIdOrRecieveIdOrderBySendTimeAsc(loginUser, loginUser);
+        List<History> historyList = repository.findBySendIdOrReceiveIdOrderBySendTimeDesc(loginUser, loginUser);
         return historyList;
     }
 }

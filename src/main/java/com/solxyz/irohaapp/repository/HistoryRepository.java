@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface HistoryRepository extends JpaRepository<History, Integer> {
-    public List<History> findBySendIdOrRecieveIdOrderBySendTimeAsc(UserInfo sendId, UserInfo recieveId);
+    public List<History> findBySendIdOrReceiveIdOrderBySendTimeDesc(UserInfo sendId, UserInfo receiveId);
 }

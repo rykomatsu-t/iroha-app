@@ -31,7 +31,7 @@ public class SendAsset {
     public void send(UserInfo from, UserInfo to, int quantity) throws Exception {
 
         // iroha接続用のクラスを生成
-        IrohaConnection irohaUtil = new IrohaConnection("localhost", 50051);
+        IrohaConnection irohaUtil = new IrohaConnection("localhost", 80);
 
         // ラッパークラスで生成されたiroha用APIを取得
         IrohaAPI api = irohaUtil.getApi();

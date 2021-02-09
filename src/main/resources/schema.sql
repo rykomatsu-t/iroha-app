@@ -22,10 +22,10 @@ create table asset (
 
 create table history (
   id serial primary key,
-  send_time time not null,
+  send_time timestamp not null,
   message varchar(200),
   asset_id int not null references asset(id),
   send_id int not null references employee(id),
-  recieve_id int not null references employee(id),
+  receive_id int not null references employee(id),
   val real not null
 );

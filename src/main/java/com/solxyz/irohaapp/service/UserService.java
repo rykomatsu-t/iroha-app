@@ -12,6 +12,8 @@ import com.solxyz.irohaapp.block.SendAsset;
 import com.solxyz.irohaapp.entity.UserInfo;
 import com.solxyz.irohaapp.repository.UserRepository;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -140,9 +142,9 @@ public class UserService {
         history.setAssetId(assetRepository.findAll().get(0));
         history.setMessage(""); // TODO メッセージを入れる
         history.setSendId(from);
-        history.setRecieveId(to);
+        history.setReceiveId(to);
         history.setVal((double)quantity);
-        history.setSendTime(new Date());
+        history.setSendTime(new Timestamp(new Date().getTime()));
 
         historyRepository.save(history);
 
